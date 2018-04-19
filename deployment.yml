@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tobbes-jokes
+  labels:
+    app: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: tobbes-jokes
+          image: czarsimon/tobbes-jokes:v0.1
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 666
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 666
+            initialDelaySeconds: 15
+            periodSeconds: 15
